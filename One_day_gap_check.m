@@ -7,6 +7,7 @@
 %         nan values
 %         zero values
 %         negative values
+%         fill values
 %     returns:
 %         parameters list
 %         sampling rates and freuqencies
