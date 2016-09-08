@@ -1,9 +1,19 @@
-% Name: uFrameDataread
-% Purpose: Generate a report on UFrame ADCP datasets
+% Name: One_day_gap_check.m
+% Purpose: 
+%     checks:
+%         time sequence
+%         time duplicates
+%         time gaps
+%         nan values
+%         zero values
+%         negative values
+%     returns:
+%         parameters list
+%         sampling rates and freuqencies
 % Author: Leila Belabbassi
-% Depatment: Marine and coastal science
-% University: Rutgers
-% Date: April 08, 2015
+% Depatment: Marine and Coastal Science
+% University: Rutgers the State University of New Jersey
+% Date: September 09, 2016
 
 clear all
 close all
