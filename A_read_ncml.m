@@ -13,15 +13,14 @@ function [meta,t0,ti,tvar,file_id] = A_read_ncml(url,fidb)
 
     % make a parameter array and gets its attribute
     
-    fprintf(fidb,'%31s,%31s,%20s,%20s,%20s,%20s,%20s,%20s,\n%s,\n',...
+    fprintf(fidb,'%31s,%31s,%20s,%20s,%20s,%20s,%20s,%20s,%20s,\n',...
            'parameter_name  ','parameter_unit  ',...
            'parameter_size','min_val  ','max_val  ','isnan_val  ',...
-           'iszeros_val  ','isnegatif_val  ','____');
+           'iszeros_val  ','isnegatif_val  ','isFill_val');
         
     NCML_par_list = {meta.Variables.Name}';
     NCML_par_type = {meta.Variables.Datatype}';
-    
-    
+       
     for ii = 1:length(NCML_par_list)
         if strcmp(NCML_par_type(ii),'char') == 0
             disp(NCML_par_list(ii))
@@ -42,28 +41,40 @@ function [meta,t0,ti,tvar,file_id] = A_read_ncml(url,fidb)
                 min_val = min(parameter_data);
                 max_val = max(parameter_data);
                 nan_val = length(find(isnan(parameter_data)==1));
-                zeros_val   = length(find(parameter_data == 0));
+                zeros_val  = length(find(parameter_data == 0));
                 negatif_val = length(find(parameter_data < 0));
+                
                 NCML_par_att = {meta.Variables(ii).Attributes};
 
                 if ~isempty(NCML_par_att{1,1})
                     list_att = NCML_par_att{1,1};
                     ind_unit = find(cellfun(@(x)strcmp(x,'units'),{list_att.Name}) );
-
+                    
                     if ~isempty(ind_unit)
                          parameter_unit  = {list_att(ind_unit).Value};
                     else
                          parameter_unit = {''};
                     end
+                    
+                    ind_fillvalues = find(cellfun(@(x)strcmp(x,'_FillValue'),{list_att.Name}));
+                     if ~isempty(ind_fillvalues)
+                         parameter_FV  = {list_att(ind_fillvalues).Value};
+                         disp(parameter_FV{1})
+                         Fill_val = length(find(parameter_data == parameter_FV{1}));
+                    else
+                         Fill_val = '';
+                    end
+                    
                 else
                     parameter_unit = {''};
+                    Fill_val = '';
                 end
 
                 fprintf(fidb,'%32s,',char(parameter_name));
                 fprintf(fidb,'%32s,',char(parameter_unit{1}));
                 fprintf(fidb,'%23d,',parameter_size_num);
-                fprintf(fidb,'%15.4f,%15.4f,%15d,%15d,%15d\n',min_val,max_val,...
-                    nan_val,zeros_val,negatif_val);
+                fprintf(fidb,'%15.4f,%15.4f,%15d,%15d,%15d,%15d\n',min_val,max_val,...
+                                            nan_val,zeros_val,negatif_val,Fill_val);
 
                 if strcmp(parameter_name,'time') == 1
                     tvar = ((parameter_data(:,1))/86400) + datenum(1900, 1, 1, 0, 0, 0);
