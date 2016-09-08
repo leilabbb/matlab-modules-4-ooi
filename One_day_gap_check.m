@@ -6,12 +6,17 @@
 % Date: April 08, 2015
 
 % Define input variables
+	% data file
 url = 'http://opendap.oceanobservatories.org/thredds/dodsC/rest-in-class/Coastal_Endurance/CE05MOAS/05-CTDGVM000/recovered_host/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host.ncml';
 %'http://opendap.oceanobservatories.org/thredds/dodsC/rest-in-class/Coastal_Endurance/CE05MOAS/05-CTDGVM000/recovered_host/CE05MOAS-GL311-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host/CE05MOAS-GL311-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host.ncml';
+
+    % parameter to check gaps
 parameter = 'time';
+
+    % parent output directory
 OutputDir = '/Users/leila/Documents/MATLAB/matlab-modules-4-ooi/';
 
-% Define output files
+    % output files
 filea_name = 'Time_check_report.txt';
 fileb_name = 'Parameter_list_check.csv';
 file1_name = 'Time_sample_rate_frequency.txt';
@@ -19,24 +24,19 @@ file2_name = 'Time_data_in_sequence.txt';
 file3_name = 'Time_gap.txt';
 file4_name = 'Time_gap_id.txt';
 
+% begin running programing functions 
+
 disp('***create output files')
 [filea,fida,fileb,fidb,file1,fid1,file2,fid2,file3,fid3,file4,fid4] = ...
      B_create_output_files(OutputDir,filea_name,fileb_name,file1_name,...
                                          file2_name,file3_name,file4_name);
-                                     
-% read ncml file and extract the time parameter array
+ 
+disp('***read ncml file and extract the time parameter array')
 [meta,t0,ti,tvar,file_id] = A_read_ncml(url,fidb);
 
-if length(tvar) > 1 
-    
-    % create an output directory
-    output_dir = [OutputDir,file_id];
-    mkdir(output_dir);
-    if exist(file_id,'dir') ~= 0 
-       rmdir(file_id);
-       mkdir(output_dir);
-    end
 
+if length(tvar) > 1
+    
     disp('***report on data file time sequence')
     [tdate,tflag,sdate,h,pdr,psr] = C_time_seq_check(tvar,filea,fida,file2,fid2,...
                                                         url,parameter);
@@ -53,4 +53,21 @@ if length(tvar) > 1
 
 end
 
-  
+% create an output directory with reference to file name
+output_dir = [OutputDir,file_id];
+mkdir(output_dir);
+if exist(file_id,'dir') ~= 0 
+   rmdir(file_id);
+   mkdir(output_dir);
+end
+
+% move to the assessed file folder
+cd(output_dir)
+movefile([OutputDir,filea_name])
+movefile([OutputDir,fileb_name])
+movefile([OutputDir,file1_name])
+movefile([OutputDir,file2_name])
+movefile([OutputDir,file3_name])
+movefile([OutputDir,file4_name])
+
+cd(OutputDir)
