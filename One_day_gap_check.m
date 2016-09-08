@@ -5,6 +5,9 @@
 % University: Rutgers
 % Date: April 08, 2015
 
+clear all
+close all
+
 % Define input variables
 	% data file
 url = 'http://opendap.oceanobservatories.org/thredds/dodsC/rest-in-class/Coastal_Endurance/CE05MOAS/05-CTDGVM000/recovered_host/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host.ncml';
@@ -53,21 +56,5 @@ if length(tvar) > 1
 
 end
 
-% create an output directory with reference to file name
-output_dir = [OutputDir,file_id];
-mkdir(output_dir);
-if exist(file_id,'dir') ~= 0 
-   rmdir(file_id);
-   mkdir(output_dir);
-end
-
-% move to the assessed file folder
-cd(output_dir)
-movefile([OutputDir,filea_name])
-movefile([OutputDir,fileb_name])
-movefile([OutputDir,file1_name])
-movefile([OutputDir,file2_name])
-movefile([OutputDir,file3_name])
-movefile([OutputDir,file4_name])
-
-cd(OutputDir)
+disp('*** move files to a folder assigned with the name of the file being assessed')
+movefiles_2_folder(OutputDir,file_id,filea_name,fileb_name,file1_name,file2_name,file3_name,file4_name);
