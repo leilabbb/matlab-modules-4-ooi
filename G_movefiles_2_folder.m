@@ -6,6 +6,8 @@ output_dir = [OutputDir,file_id];
 if exist(output_dir,'dir') ~= 0 
    rmdir(output_dir,'s');
    mkdir(output_dir);
+else
+   mkdir(output_dir); 
 end
 
 % move to the assessed file folder
