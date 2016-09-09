@@ -3,7 +3,6 @@ function [filea,fida,fileb,fidb,file1,fid1,file2,fid2,file3,fid3,file4,fid4] = .
          B_create_output_files(OutputDir,filea_name,fileb_name,file1_name,...
                               file2_name,file3_name,file4_name)
 
-
     
     % report on time channel data
     filea = [OutputDir filea_name] ;
@@ -19,9 +18,8 @@ function [filea,fida,fileb,fidb,file1,fid1,file2,fid2,file3,fid3,file4,fid4] = .
        delete(fileb);
        fileb = [OutputDir fileb_name];
     end
-    fidb = fopen(fileb,'wt');      
     
-    
+    fidb = fopen(fileb,'wt'); 
     % report on mode(s) and frequency(ies)
     file1 = [OutputDir file1_name] ;
     if exist(file1,'file') ~= 0 
