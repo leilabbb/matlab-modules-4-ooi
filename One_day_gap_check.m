@@ -58,7 +58,8 @@ if length(tvar) > 1
     [spmode,sprate_unique,H] = D_return_mode(tdate,fid1,fida);
     
     disp('***check time column gaps')
-    [ndate,cnt] = E_IDTimeGaps(tdate,fid3,fida,fid4);   
+    % modify tdate(:) to (1:10)select the indicies of the range of time you want to check  by 
+    [ndate,cnt] = E_IDTimeGaps(tdate(:),fid3,fida,fid4);  
     
     fprintf(fida,'%s%d%s\n','Common sampling interval : ',spmode,' sec');
     
@@ -68,4 +69,4 @@ if length(tvar) > 1
 end
 
 disp('*** move files to a folder assigned with the name of the file being assessed')
-movefiles_2_folder(OutputDir,file_id,filea_name,fileb_name,file1_name,file2_name,file3_name,file4_name);
+moG_vefiles_2_folder(OutputDir,file_id,filea_name,fileb_name,file1_name,file2_name,file3_name,file4_name);
