@@ -42,8 +42,8 @@ function [tdate,tflag,sdate,h,pdr,psr] = C_time_seq_check(datain,filea,fida,file
     checkseq = vartime - sdate;
 
     fprintf(fida,'%s%d\n%s\n','Number of Timestamps: ',length(vartime),' ');
-    fprintf(fida,'%s%s\n%s\n','Start Date: ', datestr(sdate(1),31),' ');
-    fprintf(fida,'%s%s\n%s\n','End Date: ', datestr(sdate(length(vartime)),31),' ');
+    fprintf(fida,'%s%s\n%s\n','Data File Start Date: ', datestr(sdate(1),31),' ');
+    fprintf(fida,'%s%s\n%s\n','Data File End Date: ', datestr(sdate(length(vartime)),31),' ');
    
     % Define VARIABLE SIZE
 

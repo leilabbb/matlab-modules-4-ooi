@@ -28,8 +28,19 @@ else
 end
 
 cd(sub_dir)
-movefile([output_dir,'/',filea_name])
-movefile([output_dir,'/',file3_name])
-movefile([output_dir,'/',file4_name])
+if strcmp(deployment_num,'all') == 1
+    movefile([output_dir,'/',filea_name])
+    movefile([output_dir,'/',fileb_name])
+    movefile([output_dir,'/',file1_name])
+    movefile([output_dir,'/',file2_name])
+    movefile([output_dir,'/',file3_name])
+    movefile([output_dir,'/',file4_name])    
+else
+    movefile([output_dir,'/',filea_name])
+    movefile([output_dir,'/',file3_name])
+    movefile([output_dir,'/',file4_name])
+end
+
+
 
 cd(OutputDir)
