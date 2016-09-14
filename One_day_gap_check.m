@@ -22,13 +22,16 @@ close all
 % Define input variables
 
 	% data file
-url = 'http://opendap.oceanobservatories.org/thredds/dodsC/rest-in-class/Coastal_Endurance/CE05MOAS/05-CTDGVM000/telemetered/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument-telemetered/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument-telemetered.ncml';
+
+%url = '/Users/leila/Downloads/CE05MOAS-GL320-02-FLORTM000-flort_m_glider_recovered-recovered_host.ncml'; 
+url = 'http://opendap.oceanobservatories.org/thredds/dodsC/rest-in-class/Coastal_Endurance/CE05MOAS/02-FLORTM000/recovered_host/CE05MOAS-GL320-02-FLORTM000-flort_m_glider_recovered-recovered_host/CE05MOAS-GL320-02-FLORTM000-flort_m_glider_recovered-recovered_host.ncml';
+%url = 'http://opendap.oceanobservatories.org/thredds/dodsC/rest-in-class/Coastal_Endurance/CE05MOAS/05-CTDGVM000/telemetered/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument-telemetered/CE05MOAS-GL319-05-CTDGVM000-ctdgv_m_glider_instrument-telemetered.ncml';
 %'http://opendap.oceanobservatories.org/thredds/dodsC/rest-in-class/Coastal_Endurance/CE05MOAS/05-CTDGVM000/recovered_host/CE05MOAS-GL311-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host/CE05MOAS-GL311-05-CTDGVM000-ctdgv_m_glider_instrument_recovered-recovered_host.ncml';
 
     % deployment time info
-deployment_num = '3';
-d_strat_time = '2015-10-08T22:55:00';%'2014-04-20T18:26:00';
-d_end_time = '2015-11-22T00:00:00';%'2014-05-28T00:00:00';
+deployment_num = '1';
+d_strat_time = '2014-10-07T01:14:00';%'2014-04-20T18:26:00';
+d_end_time = '2014-12-29T00:00:00';%'2014-05-28T00:00:00';
     
 ds_date = datenum(d_strat_time,'yyyy-mm-ddTHH:MM:SS');
 de_date = datenum(d_end_time,'yyyy-mm-ddTHH:MM:SS');
@@ -52,7 +55,7 @@ disp('***create output files')
                                          file2_name,file3_name,file4_name);
  
 disp('***read ncml file and extract the time parameter array')
-[meta,t0,ti,tvar,file_id,refdes,subsite_id,time_data] = A_read_ncml(url,fidb);
+[meta,t0,ti,tvar,file_id,refdes,subsite_id,time_data] = A_read_ncml(url,fidb,fida);
 
 
 if length(tvar) > 1

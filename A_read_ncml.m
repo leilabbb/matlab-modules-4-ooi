@@ -1,4 +1,4 @@
-function [meta,t0,ti,tvar,file_id,refdes,subsite_id,time_data] = A_read_ncml(url,fidb)
+function [meta,t0,ti,tvar,file_id,refdes,subsite_id,time_data] = A_read_ncml(url,fidb,fida)
 
     % read data file  
     meta = ncinfo(url);
@@ -58,7 +58,15 @@ function [meta,t0,ti,tvar,file_id,refdes,subsite_id,time_data] = A_read_ncml(url
             if ind_qc_check == 1
                 parameter_name = NCML_par_list(ii);
                 parameter_size = {meta.Variables(ii).Size}; parameter_size_num  = cell2mat(parameter_size);
-                parameter_data = ncread(url,NCML_par_list{ii});            
+                try
+                    parameter_data = ncread(url,NCML_par_list{ii});
+                catch ME 
+                    ME.identifier
+                    fprintf(fida,'%s\n',char(parameter_name));
+                    fprintf(fida,'%s\n',ME.identifier);
+                    continue   
+                end
+                    
                 min_val = min(parameter_data);
                 max_val = max(parameter_data);
                 nan_val = length(find(isnan(parameter_data)==1));
